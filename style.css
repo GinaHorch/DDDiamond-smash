@@ -1,0 +1,337 @@
+:root {
+    --main-bg-color: #0E0E43;
+    --text-color: #ffffff;
+}
+
+html, body {
+	height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	background-image: url("https://assets.codepen.io/5804361/Untitled+design+%2828%29.png?format=auto");
+	background-repeat: no-repeat;
+  background-position: center;
+	background-size: cover;
+  font-family: Raleway, sans-serif;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+    color: var(--text-color);
+    font-size: 3em;
+}
+
+button {
+    display: inline-block;
+		align-self: center;
+    font-size: 2em;
+    color: var(--text-color);
+    background: var(--main-bg-color);
+    font-weight: bold;
+    border: none;
+    padding: 10px 30px;
+	  border-radius: 5px;
+		max-width: 150px;
+}
+
+.score {
+    background: var(--main-bg-color);
+    color: var(--text-color);
+    padding: 0 0.5em;
+    line-height: 1;
+    border-radius: 1rem;
+		align-item: center;
+}
+
+.timer {
+    font-size: 1.5em;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+	align-items: center;
+	flex-grow: 1;
+  margin: auto 0;
+	max-width: 650px;
+	gap: 20px;
+	margin: 0 auto;
+  min-height: 300px; /* Ensures the game area has a visible height */
+  padding: 20px;
+}
+
+.hole {
+  flex: 1 1 calc(33.33% - 20px);
+  overflow: hidden;
+  position: relative;
+	width: 30vw;
+  max-width: 200px;
+	height: 30vw;
+  max-height: 200px;
+  min-width: 100px;
+  min-height: 100px;
+	aspect-ratio: 1;
+	gap: 20px;
+}
+
+.hole:after {
+    display: block;
+    background-image: url("https://assets.codepen.io/707165/hole.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom center;
+    content: "";
+    width: 100%;
+    height: 70px;
+    position: absolute;
+    z-index: -1;
+    bottom: 0px;
+}
+
+.hole:nth-child(3n) .diamond {
+  background-image: url("https://assets.codepen.io/5804361/3.png?format=auto");
+}
+.hole:nth-child(3n-1) .diamond {
+  background-image: url("https://assets.codepen.io/5804361/2.png?format=auto");
+}
+
+.diamond {
+    border: none;
+    background-image: url("https://assets.codepen.io/5804361/1.png?format=auto");
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s ease-out;
+    left: 0;
+    z-index: 2;
+}
+
+.hole.up .diamond {
+    top: 0;
+}
+
+/* Smash Effects */
+.diamond.smashed {
+    animation: flash 0.1s forwards;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+        filter: brightness(3);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
+/* Burst Effect */
+.burst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 0, 0.8);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+}
+
+.burst.active {
+    animation: burstEffect 0.6s forwards;
+}
+
+@keyframes burstEffect {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+}
+
+/* Shards */
+.shard {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+		background-color: rgba(255, 255, 0, 0.8);
+    transform: scale(0);
+    opacity: 0;
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.shard.active {
+	animation: scatterShard1 0.5s ease-out forwards;
+}
+
+.shard1 {
+    top: 50%;
+    left: 50%;
+    background-color: rgba(255, 100, 0, 0.8);
+    animation: scatterShard1 0.5s ease-out forwards;
+}
+
+.shard2 {
+    top: 50%;
+    left: 50%;
+    background-color: rgba(255, 200, 0, 0.8);
+    animation: scatterShard2 0.5s ease-out forwards;
+}
+
+.shard3 {
+    top: 50%;
+    left: 50%;
+    background-color: rgba(255, 255, 50, 0.8);
+    animation: scatterShard3 0.5s ease-out forwards;
+}
+
+@keyframes scatterShard1 {
+    0% { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
+    100% { transform: translate(-60px, -60px) scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+@keyframes scatterShard2 {
+    0% { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
+    100% { transform: translate(60px, -60px) scale(1.5) rotate(-180deg); opacity: 0; }
+}
+
+@keyframes scatterShard3 {
+    0% { transform: translate(0, 0) scale(1) rotate(0); opacity: 1; }
+    100% { transform: translate(-60px, 60px) scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+.hammer {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: 40px;
+    opacity: 0;
+    transition: transform 0.2s ease-out, opacity 0.1s ease-out;
+}
+
+.hammer.smash {
+    top: 40%;
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1.2);
+		transition: transform 0.2s ease-out, opacity 0.1s ease-out;
+}
+
+.copyright {
+	color: #fff;
+	margin-top: 5px;
+	font-size: 1.5em;
+}
+
+body {
+  padding-bottom: 0;
+}
+
+footer {
+  background: black;
+  margin-top: 100px;
+  padding: 10px;
+	margin-top: auto;
+}
+
+.imgfooter {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer img {
+  width: 200px;
+  margin: 20px;
+}
+
+header {
+  background: #ffe4b4;
+  padding: 20px;
+  font-weight: bold;
+	text-align: center;
+	width: 100%;
+}
+
+img {
+	width: 200px;
+  margin: 20px;
+	text-align: center;
+}
+
+.ddd {
+    width: 200px;
+		align-items: center;
+		align-self: center;
+}
+
+.points-float {
+    background-color: rgba(255, 255, 255, 0.8); /* Light background to help visibility */
+    color: black; /* High contrast */
+		position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2em;
+    font-weight: bold;
+    color: green;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+    // 
+		transition: opacity 0.2s ease, transform 1s ease;
+}
+
+.points-float.active {
+    opacity: 1;
+		animation: floatPoints 1s ease-out forwards;
+}
+
+@keyframes floatPoints {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -100%) scale(1.2);
+    }
+}
+
+#high-score {
+		font-weight: bold;
+		color: gold;
+		font-size: 1.5rem;
+}
